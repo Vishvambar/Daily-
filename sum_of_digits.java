@@ -23,6 +23,9 @@ public class sum_of_digits{
 	int number = input.nextInt();
 	
 	sumOfDigits(number);
+
+
 	}
+	
 }
 
