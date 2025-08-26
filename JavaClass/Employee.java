@@ -24,8 +24,13 @@ public class Employee {
     System.out.println("Bous is "+bonus);
  }
 
+// you can use these functions in extended classes and can override them !
 
  public void generatedReport(){
     System.out.println("Generated Report for Employee");
+ }
+
+ public void handlingProjects(){
+    System.out.println("Handling Projects by Employee");
  }
 }
