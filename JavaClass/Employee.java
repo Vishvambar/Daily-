@@ -24,4 +24,8 @@ public class Employee {
     System.out.println("Bous is "+bonus);
  }
 
+
+ public void generatedReport(){
+    System.out.println("Generated Report for Employee");
+ }
 }
