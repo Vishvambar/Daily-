@@ -17,6 +17,28 @@ node *newnode(int value)
     return temp;
 }
 
+node *buildtree()
+{
+    int value;
+    cout << "Enter value (-1 for no node )\n ";
+    cin >> value;
+
+    if (value == -1)
+    {
+        return NULL;
+    }
+
+    node *root = newnode(value);
+
+    cout << "Enter left child of " << value << ": \n";
+    root->left = buildtree();
+
+    cout << "Enter right child of " << value << ": \n";
+    root->right = buildtree();
+
+    return root;
+}
+
 void preorder(node *root)
 {
     if (root == NULL)
@@ -26,16 +48,20 @@ void preorder(node *root)
     preorder(root->right);
 }
 
-void inorder (node *root){
-    if (root == NULL ) return ;
+void inorder(node *root)
+{
+    if (root == NULL)
+        return;
     inorder(root->left);
     cout << root->data << " ";
     inorder(root->right);
 }
-void postorder (node *root){
-    if (root == NULL ) return ;
+void postorder(node *root)
+{
+    if (root == NULL)
+        return;
     postorder(root->left);
-    
+
     postorder(root->right);
     cout << root->data << " ";
 }
@@ -43,23 +69,18 @@ void postorder (node *root){
 int main()
 
 {
-
-    node *root = newnode(12);
-    root->left = newnode(10);
-    root->right = newnode(1);
-    root->left->left = newnode(89);
-    root->left->right = newnode(10);
+    cout << "Build your binary tree : \n";
+    node *root = buildtree();
 
     cout << "preorder traversal : \n ";
     preorder(root);
-    cout << "\n";cout << "Ineorder traversal : \n ";
+    cout << "\n";
+    cout << "Ineorder traversal : \n ";
     inorder(root);
-    cout << "\n";cout << "posteorder traversal : \n ";
+    cout << "\n";
+    cout << "posteorder traversal : \n ";
     postorder(root);
     cout << "\n";
-
-
-
 
     return 0;
 }
