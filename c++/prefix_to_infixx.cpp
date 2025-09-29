@@ -1,85 +1,78 @@
 #include <iostream>
 #include <stack>
 #include <string>
+#include <algorithm> 
 using namespace std;
 
-class node
-{
+class node {
 public:
     char data;
     node *left;
     node *right;
-    node(char x)
-    {
+    node(char x) {
         data = x;
         left = right = NULL;
     }
 };
-class NodeStack
-{
+
+class NodeStack {
 public:
-    int top;
-    node *st[10];
-    NodeStack()
-    {
-        top = -1;
+    stack<node*> s;
+
+    void push(node* temp) {
+        s.push(temp);
     }
 
-    void push(node *temp)
-    {
-        st[++top] = temp;
-    }
-    node *pop()
-    {
-        return st[top--];
+    node* pop() {
+        if (s.empty()) {
+            return NULL;
+        }
+        node* temp = s.top();
+        s.pop();
+        return temp;
     }
 };
 
-node *create()
-{
+node* createFromPrefix() {
     NodeStack s;
-    node *root, *temp;
-    int i;
-    char ch[10];
-    cout << "\n Enter postfix expression : ";
-    cin >> ch;
-    while (ch[i] != '\0')
-    {
-        if (isalnum(ch[i]))
-        {
-            root = new node(ch[i]);
-            s.push(root);
-        }
-        else
-        {
-            temp = new node(ch[i]);
+    string prefixExpr;
+    cout << "\n Enter prefix expression: ";
+    cin >> prefixExpr;
+
+    reverse(prefixExpr.begin(), prefixExpr.end());
+
+    for (char ch : prefixExpr) {
+        if (isalnum(ch)) {
+            s.push(new node(ch));
+        } else {
+            node* temp = new node(ch);
+            temp->left = s.pop(); 
             temp->right = s.pop();
-            temp->left = s.pop();
             s.push(temp);
         }
-        i++;
     }
+    return s.pop(); 
+}
 
-    return s.pop();
-}
-void inorder (node *temp){
-    if (temp != NULL){
+void inorder(node* temp) {
+    if (temp != NULL) {
+        bool isOperator = !isalnum(temp->data);
+        if (isOperator) {
+            cout << "(";
+        }
         inorder(temp->left);
-        cout<< " " << temp->data ;
+        cout << temp->data;
         inorder(temp->right);
+        if (isOperator) {
+            cout << ")";
+        }
     }
-  
 }
-int main()
-{
-    node *root = create();
-    cout << "\n Inorder expression is : ";
+
+int main() {
+    node* root = createFromPrefix();
+    cout << "\n Infix expression is: ";
     inorder(root);
     cout << endl;
     return 0;
 }
-
-
-
-
-
